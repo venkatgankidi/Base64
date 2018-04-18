@@ -22,36 +22,22 @@
 <plugins>
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>maven-shade-plugin</artifactId>
         <executions>
             <execution>
-                <id>copy-dependencies</id>
-                <phase>prepare-package</phase>
+                <phase>package</phase>
                 <goals>
-                    <goal>copy-dependencies</goal>
+                    <goal>shade</goal>
                 </goals>
-                <configuration>
-                    <outputDirectory>
-                        ${project.build.directory}/libs
-                    </outputDirectory>
-                </configuration>
             </execution>
         </executions>
-    </plugin>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
         <configuration>
-            <archive>
-                <manifest>
-                    <addClasspath>true</addClasspath>
-                    <classpathPrefix>libs/</classpathPrefix>
-                    <mainClass>
-                        com.aca.obiee.DecryptBaseFile
-                    </mainClass>
-                </manifest>
-            </archive>
-            <finalName>Base64Decoder</finalName>
+            <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <mainClass>com.aca.obiee.DecryptBaseFile</mainClass>
+            </transformer>
+            </transformers>
+   <finalName>Base64Decoder</finalName>
         </configuration>
     </plugin>
 </plugins>
